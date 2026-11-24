@@ -7,7 +7,7 @@ Standard library only; deterministic; no network; no input files.
 
 import os
 
-LINE = "WARNING: Never go back to warn yourself. It never works. It never will. It already didn't."
+LINE = "WARNING: Never warn yourself. You won't listen. You never do. You already didn't."
 
 
 def main():
@@ -17,6 +17,9 @@ def main():
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8", newline="") as f:
         f.write(LINE)
+    # Round-trip check: what landed on disk must be the label, exactly.
+    with open("/output/entry.txt", "r", encoding="utf-8", newline="") as f:
+        assert f.read() == LINE, "round-trip mismatch in /output/entry.txt"
 
 
 if __name__ == "__main__":
